@@ -6,7 +6,7 @@ tipos_de_dados = [['id da filial'], ['id do cliente'], ['nome'], ['telefone'], [
 print('------------------------------------------------------------------------')
 print('Bem vindo ao sistema de gerenciamento de clientes!')
 t .sleep(0.75)
-print("digite h para ver os comandos disponíveis, s para parar o programa.")
+print("digite /help para ver os comandos disponíveis, s para parar o programa.")
 print('------------------------------------------------------------------------')
 t.sleep(1.25)
 
@@ -18,7 +18,7 @@ while True: #Esses comentários de baixo são o modo ideal de fazer, ver library
     print(filiais, '+', dados) #para testes
     inp = (input('\n').strip()).lower(); print()
 
-    if inp == '/h':
+    if inp == '/help':
         l.comandos()
     elif inp == 's':
         print('Saindo do sistema...')
