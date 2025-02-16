@@ -38,7 +38,7 @@ o csv com a matriz( lembrar de colocar ela quando chamar a função no main, por
 # 'a1' para append, só usar listas simples nele, adiciona uma linha ao final ( usar na adicionar clientes e funções similares, pq adiciona ao final do código )
 # 'a+' para append, só usar matrizes nele, adiciona x linhas ao final ( não sei se vamos precisar, mas deixei caso houvesse necessidade )
 
-def comandos():
+def comandos_p1():
     print('/h - Mostra os comandos')
     print('/sair - Fecha o sistema')
     print('/visualizar_dados - Mostra todos os dados de todas as filiais')
