@@ -1,25 +1,27 @@
 import library as l
 import time as t
 
-tipos_de_dados = [['id da filial'], ['id do cliente'], ['nome'], ['telefone'], ['cpf'], ['compras']]
+tipos_de_dados = [['id do cliente'], ['nome'], ['telefone'], ['cpf'], [], ['compras']] #todos os dados são do tipo str ou int, exceto compras -> list[str], com a informação sobre a compra e seu horário ( usar datetime ) 
 
 print('------------------------------------------------------------------------')
-print('Bem vindo ao sistema de gerenciamento de clientes!')
-t .sleep(0.75)
-print("digite /help para ver os comandos disponíveis, s para parar o programa.")
+print('Bem vindo ao sistema de gerenciamento de clientes e vendas!')
+t.sleep(0.75)
+print("digite /help para ver os comandos disponíveis, /sair para parar o programa.") #temporariamente, /help -> h, /sair -> s
 print('------------------------------------------------------------------------')
 t.sleep(1.25)
 
-while True: #Esses comentários de baixo são o modo ideal de fazer, ver library
+while True:
     info = l.get_info()
     filiais = info[0]
     dados = info[1]
 
-    print(filiais, '+', dados) #para testes
-    inp = (input('\n').strip()).lower(); print()
+    print(filiais, '+', dados) #temporário
+    inp = (input('\n').strip()).lower()
+    t.sleep(0.5)
+    print()
 
-    if inp == '/help':
-        l.comandos()
+    if inp == 'h' or inp == '1':
+        l.comandos_p1()
     elif inp == 's':
         print('Saindo do sistema...')
         break
