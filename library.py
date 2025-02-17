@@ -6,22 +6,14 @@ Sobre a matriz tridimensional:
 
 [ > primeira dimensão: cada filial
     [ > matriz para a filial
-        [ > segunda dimensão: linhas de dados
-        ['id da filial'], ['id do cliente'], ['nome'], ['telefone'], ['cpf'] ['compras'] > valores default
-        ],
-
         [
-        [1], [1], ['Heitor Ferreira Da Silva'], [84999673539], [12742580492], [[], [], []]
+        [1], ['Heitor Ferreira Da Silva'], [84999673539], [12742580492], [[], [], []]
         ]
     ],
 
     [
         [
-        ['id da filial'], ['id do cliente'], ['nome'], ['telefone'], ['cpf']
-        ],
-
-        [
-        [2], [2], ['Cauã'], [84999673538], [12742580491], []
+        [2], ['Cauã'], [84999673538], [12742580491], []
         ]
     ]
 
@@ -97,7 +89,7 @@ def get_info() -> list[list]:
     info.append(dados)
     return info
 
-def is_vazio(x):
+def nao_esta_vazio(x):
     if not x:
         print('Função Indisponível!\n')
         return x
@@ -113,21 +105,27 @@ def remover_caracteres(string: str) -> int:
     
     return string_numerica
 
-def print_em_ordem_numerado_e_dict(x: list, com_dict: bool=False, mensagem: str=' ') -> dict:
+def print_em_ordem_numerado_e_dict(x: list, mensagem: str=' ') -> dict:
     dicionário = {}
 
     for i in range(len(x)):
         print(f'{i +1}.{mensagem}{x[i]}')
-        if com_dict:
-            dicionário[i + 1] = x[i]
+        dicionário[i + 1] = x[i]
 
     return dicionário
 
-def visualizar_dados(d: list) -> str:
-    pass
+def visualizar_dados(d: list, v: list[str], f: list[str]): #de modo cru, está concluída
+    v.insert(0, 'filial')
+    print(v)
 
-def visualizar_dados_filial(d: list, f: list): #de modo cru, está concluída
-    escolhas = print_em_ordem_numerado_e_dict(f, True)
+    for i in f: #i = filial (str)
+        for y in d[f.index(i)]: #y = linha da filial (list)
+            y.insert(0, i)
+            print(y)
+
+def visualizar_dados_filial(d: list, v: list[str], f: list[str]): #de modo cru, está concluída
+    escolhas = print_em_ordem_numerado_e_dict(f)
+    
     try:
         num = int(input('\nEscolha uma filial pelo número, para visualizar seus dados: ').strip())
     except ValueError:
@@ -138,7 +136,9 @@ def visualizar_dados_filial(d: list, f: list): #de modo cru, está concluída
         print('Filial inexistente')
         return
     
-    print(f'\n{d[f.index(escolhas[num])]}')
+    print(v)
+    for i in d[f.index(escolhas[num])]:
+        print(i)
 
 def adicionar_cliente(dados) -> list: #em andamento
     dados_cliente = []
