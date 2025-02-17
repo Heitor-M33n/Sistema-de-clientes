@@ -120,11 +120,13 @@ def visualizar_dados(d: list, v: list[str], f: list[str]): #de modo cru, está c
 
     for i in f: #i = filial (str)
         for y in d[f.index(i)]: #y = linha da filial (list)
-            y.insert(0, i)
+            y.insert(0, i[0:-4])
             print(y)
 
 def visualizar_dados_filial(d: list, v: list[str], f: list[str]): #de modo cru, está concluída
-    escolhas = print_em_ordem_numerado_e_dict(f)
+    f_sem_csv = [x[0:-4] for x in f]
+    escolhas = print_em_ordem_numerado_e_dict(f_sem_csv)
+    print(escolhas)
     
     try:
         num = int(input('\nEscolha uma filial pelo número, para visualizar seus dados: ').strip())
@@ -137,7 +139,7 @@ def visualizar_dados_filial(d: list, v: list[str], f: list[str]): #de modo cru, 
         return
     
     print(v)
-    for i in d[f.index(escolhas[num])]:
+    for i in d[f_sem_csv.index(escolhas[num])]:
         print(i)
 
 def adicionar_cliente(dados) -> list: #em andamento
