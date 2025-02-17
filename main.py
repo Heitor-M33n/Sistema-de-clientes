@@ -1,7 +1,7 @@
 import library as l
 import time as t
 
-tipos_de_dados = [['id do cliente'], ['nome'], ['telefone'], ['cpf'], [], ['compras']] #todos os dados são do tipo str ou int, exceto compras -> list[str], com a informação sobre a compra e seu horário ( usar datetime ) 
+tipos_de_dados = ['id do cliente', 'nome', 'telefone', 'cpf', 'compras'] #todos os dados são do tipo str ou int, exceto compras -> list[str], com a informação sobre a compra e seu horário ( usar datetime ) 
 
 print('------------------------------------------------------------------------')
 print('Bem vindo ao sistema de gerenciamento de clientes e vendas!')
@@ -15,7 +15,7 @@ while True:
     filiais = info[0]
     dados = info[1]
 
-    print(filiais, '+', dados) #temporário
+    print('( Temporário )', filiais, '+', dados) #temporário
     inp = (input('\n').strip()).lower()
     t.sleep(0.5)
     print()
@@ -26,15 +26,15 @@ while True:
         print('Saindo do sistema...')
         break
     elif inp == '/visualizar_dados':
-        if not l.is_vazio(filiais):
-            l.visualizar_dados()
+        if l.nao_esta_vazio(filiais):
+            l.visualizar_dados(dados, tipos_de_dados, filiais)
     elif inp == '/visualizar_dados_filial':
-        if not l.is_vazio(filiais):
-            l.visualizar_dados_filial(dados, filiais)
+        if l.nao_esta_vazio(filiais):
+            l.visualizar_dados_filial(dados, tipos_de_dados, filiais)
     elif inp == '/adicionar_cliente':
         l.adicionar_cliente(dados)
     elif inp == '/remover_cliente':
-        if not l.is_vazio(dados):
+        if l.nao_esta_vazio(dados):
             l.remover_cliente(dados)
     else:
         print('Opção inválida.')
