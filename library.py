@@ -105,14 +105,9 @@ def remover_caracteres(string: str) -> int:
     
     return string_numerica
 
-def print_em_ordem_numerado_e_dict(x: list, mensagem: str=' ') -> dict:
-    dicionário = {}
-
+def print_em_ordem_numerado(x: list, mensagem: str=' '):
     for i in range(len(x)):
         print(f'{i +1}.{mensagem}{x[i]}')
-        dicionário[i + 1] = x[i]
-
-    return dicionário
 
 def visualizar_dados(d: list, v: list[str], f: list[str]): #de modo cru, está concluída
     v.insert(0, 'filial')
@@ -125,8 +120,7 @@ def visualizar_dados(d: list, v: list[str], f: list[str]): #de modo cru, está c
 
 def visualizar_dados_filial(d: list, v: list[str], f: list[str]): #de modo cru, está concluída
     f_sem_csv = [x[0:-4] for x in f]
-    escolhas = print_em_ordem_numerado_e_dict(f_sem_csv)
-    print(escolhas)
+    print_em_ordem_numerado(f_sem_csv)
     
     try:
         num = int(input('\nEscolha uma filial pelo número, para visualizar seus dados: ').strip())
@@ -134,12 +128,12 @@ def visualizar_dados_filial(d: list, v: list[str], f: list[str]): #de modo cru, 
         print('Insira um número.')
         return
 
-    if num not in escolhas:
+    if num > len(d):
         print('Filial inexistente')
         return
     
     print(v)
-    for i in d[f_sem_csv.index(escolhas[num])]:
+    for i in d[num - 1]:
         print(i)
 
 def adicionar_cliente(dados) -> list: #em andamento
