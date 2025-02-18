@@ -60,7 +60,7 @@ def get_info() -> list[list]:
 
     dir = os.listdir()
     for arq in dir:
-        if arq[-4:-1] + arq[-1] == '.csv':
+        if arq[-4:] == '.csv':
             filiais.append(arq)
 
     filiais.sort()
