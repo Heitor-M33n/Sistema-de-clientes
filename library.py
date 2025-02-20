@@ -17,9 +17,7 @@ Sobre a matriz tridimensional:
     ]
 ]
 
-Sobre o csv:
-
-Ao final de cada função, usar o escrever_csv para atualizar o .csv, ver os modos.
+Sobre o csv: Ao final de cada função, usar o escrever_csv para atualizar o .csv, ver os modos.
 A cada iteração do main loop o código já atualiza a matriz automaticamente, para estarem sempre sincronizados, 
 o csv com a matriz( lembrar de colocar ela quando chamar a função no main, por meio dos args da função )
 '''
@@ -75,9 +73,20 @@ def nao_esta_vazio(x):
         return x
     else:
         return True
-    
+   
 def print_em_ordem_numerado(x: list, mensagem: str=' '):
     for i in range(len(x)):
         print(f'{i + 1}.{mensagem}{x[i]}')
 
 def remover_caracteres(string: str, modo: str='num') -> int:
+    string_new = ''
+
+    for i in string:
+        if modo == 'num':
+            if i.isnumeric():
+                string_new += i
+        elif modo == 'whitespace':
+            if not i.isspace():
+                string_new += i
+
+    return string_new
