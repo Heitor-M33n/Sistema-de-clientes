@@ -79,6 +79,9 @@ while True:
         elif inp == '/find_cliente':
             if l.nao_esta_vazio(dados):
                 cf.encontrar_cliente
+        elif inp == '/alterar_dados':
+            if l.nao_esta_vazio(dados):
+                cf.alterar_dados_cliente():
         elif inp == '/list_filiais': #done
             if l.nao_esta_vazio(filiais):
                 print([x[0:-4] for x in filiais])
