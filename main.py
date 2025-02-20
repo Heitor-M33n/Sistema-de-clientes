@@ -39,6 +39,13 @@ while True:
         print('            Bem vindo ao sistema de gerenciamento de estoque e vendas            ')
         print('digite /help para ver os comandos disponíveis, /s para retornar pro menu inicial.') #temporariamente, /help -> h, /sair -> s
         print('---------------------------------------------------------------------------------')
+    elif sistema == '/sair':
+        print('Saindo...')
+        break
+    else:
+        print('-------------------')
+        print('Sistema inexistente')
+        print('-------------------')
 
     while sistema == '/cliente_e_filiais':
         info = l.get_info()
@@ -91,7 +98,9 @@ while True:
             #adicionar funções conforme for fazendo...
 
     while sistema == '/estoque_e_vendas':
-        print('To be added...')
+        #ainda será implementado
         break
-    break
-    sistema = (input(': ').strip()).lower()
+    print('Digite /sair para fechar o programa,')
+    print('ou um dos comandos para acessar as funções.')
+    sistema = (input().strip()).lower()
+    print()
