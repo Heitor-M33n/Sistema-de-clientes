@@ -3,9 +3,6 @@ import library_estoque_e_vendas as ev
 import library_clientes_e_filiais as cf
 import time as t
 
-tipos_de_valor = ['id do cliente', 'nome completo', 'telefone', 'cpf', 'compras'] #todos os dados são do tipo str ou int, exceto compras -> list[str], com a informação sobre a compra e seu horário ( usar datetime ) 
-type_tipos_de_valor = ['int', 'str', 'int', 'int', 'list[str]']
-
 print('Iniciando...')
 t.sleep(2)
 print('============================================================')
@@ -22,10 +19,6 @@ print('===========================================================\n')
 sistema = (input('').strip()).lower()
 
 while True:
-    info = l.get_info()
-    filiais = info[0]
-    dados = info[1]
-
     if sistema == '/cliente_e_filiais':
         print('---------------------------------------------------------------------------------')
         print('           Bem vindo ao sistema de gerenciamento de clientes e filiais!          ')

@@ -5,75 +5,83 @@ import library as l
 #Modularizar a escolha de filial
 #implementar o l.next_id() antes das funções de cliente
 #funções referentes aos clientes ( TODAS )
+#função do novo tipo de dado ( :sob: )
+
+valores = ['id do cliente', 'nome completo', 'telefone', 'cpf', 'compras'] #todos os dados são do tipo str ou int, exceto compras -> list[str], com a informação sobre a compra e seu horário ( usar datetime ) 
+type_valores = ['int', 'str', 'int', 'int', 'list[str]']
 
 def condicionais():
     while True:
-        inp = (input('\n').strip()).lower()
-        time.sleep(0.5)
-        print()
+        info = l.get_info()
+        filiais = info[0]
+        dados = info[1]
 
+        inp = (input('\n').strip()).lower()
+        print()
+        time.sleep(0.5)
+        
         if inp == '/help' or inp == '/1': #done
-            cf.comandos_p1()
+            comandos_p1()
         elif inp == '/2': #done
-            cf.comandos_p2()
+            comandos_p2()
         elif inp == '/sair': #done
             print('Saindo do sistema...')
-            break
+            return
         elif inp == '/vis_dados': #done
             if l.nao_esta_vazio(filiais):
-                cf.visualizar_dados(dados, tipos_de_valor, filiais)
+                visualizar_dados(dados, valores, filiais)
         elif inp == '/vis_dados_filial': #done
             if l.nao_esta_vazio(filiais):
-                cf.visualizar_dados_filial(dados, tipos_de_valor, filiais)
-        elif inp == '/add_filial': #melhorar
-            cf.adicionar_filial(dados, filiais)
+                visualizar_dados_filial(dados, valores, filiais)
+        elif inp == '/add_filial': #melhorar e consertar
+            adicionar_filial(dados, filiais)
         elif inp == '/del_filial': #done
             if l.nao_esta_vazio(filiais):
-                cf.remover_filial(filiais)
+                remover_filial(filiais)
         elif inp == '/rename_filial': #done
             if l.nao_esta_vazio(filiais):
-                cf.rename_filial(filiais)
-        elif inp == '/add_cliente':
+                rename_filial(filiais)
+        elif inp == '/add_cliente': #testar
             if l.nao_esta_vazio(filiais):
-                cf.adicionar_cliente(dados, tipos_de_valor, filiais, tipos_dos_tipos_de_valor)
-        elif inp == '/del_cliente':
+                adicionar_cliente(dados,
+                valores, filiais, type_valores)
+        elif inp == '/del_cliente': #testar
             if l.nao_esta_vazio(dados):
-                cf.remover_cliente(dados)
+                remover_cliente(dados)
         elif inp == '/find_cliente':
             if l.nao_esta_vazio(dados):
-                cf.encontrar_cliente
+                encontrar_cliente()
         elif inp == '/alterar_dados':
             if l.nao_esta_vazio(dados):
-                cf.alterar_dados_cliente():
+                alterar_dados_cliente()
         elif inp == '/list_filiais': #done
             if l.nao_esta_vazio(filiais):
                 print([x[0:-4] for x in filiais])
         else:
             print('Opção inválida.')
 
-
 def comandos_p1():
     time.sleep(1)
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     print('/help - Mostra os comandos') #done
     print('/sair - Fecha o sistema') #done
-    print('/vis_dados - Mostra todos os dados ') #done ( modo simples )
-    print('/vis_dados_filial - Mostra os dados de uma filial de escolha') #done ( modo simples )
-    print('/add_filial - Cria uma filial vazia ') #modificar
+    print('/vis_dados - Mostra todos os dados ') #done
+    print('/vis_dados_filial - Mostra os dados de uma filial de escolha') #done
+    print('/add_filial - Cria uma filial vazia ') #melhorar e consertar
     print('/del_filial - Remove uma filial, deletando seus dados ou os movendo') #done
     print('/rename_filial - Renomeia uma filial de escolha') #done
-    print('  1/2 ( digite o / e número da página que deseja acessar, como /2 )')
+    print("  1/2 digite '/' e número da página que deseja acessar ( como /2 )")
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
 def comandos_p2():
     time.sleep(1)
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print('/add_cliente - Adiciona cliente(s) a filial de escolha') #testar
+    print('/del_cliente - Remove cliente(s) de uma filial') #testar
     print('/find_cliente - Localiza cliente e seus dados por alguma informação dele.')
-    print('/add_cliente - Adiciona cliente(s) a filial de escolha')
-    print('/del_cliente - Remove cliente(s) de uma filial')
     print('/alterar_dados - Altera dados de escolha de um cliente')
-    print('/list_filiais - Mostra todas as filiais existentes')
-    print('  2/2 ( digite / e número da página que deseja acessar, como /1 )')
+    print('/list_filiais - Mostra todas as filiais existentes') #done
+    print("  2/2 ( digite / e número da página que deseja acessar ( como /1 )")
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
 def escrever_csv_w(dados: list[list[list]], filiais: list[str], modo: str='w'): #completa
