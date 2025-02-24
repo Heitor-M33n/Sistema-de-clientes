@@ -6,6 +6,52 @@ import library as l
 #implementar o l.next_id() antes das funções de cliente
 #funções referentes aos clientes ( TODAS )
 
+def condicionais():
+    while True:
+        inp = (input('\n').strip()).lower()
+        time.sleep(0.5)
+        print()
+
+        if inp == '/help' or inp == '/1': #done
+            cf.comandos_p1()
+        elif inp == '/2': #done
+            cf.comandos_p2()
+        elif inp == '/sair': #done
+            print('Saindo do sistema...')
+            break
+        elif inp == '/vis_dados': #done
+            if l.nao_esta_vazio(filiais):
+                cf.visualizar_dados(dados, tipos_de_valor, filiais)
+        elif inp == '/vis_dados_filial': #done
+            if l.nao_esta_vazio(filiais):
+                cf.visualizar_dados_filial(dados, tipos_de_valor, filiais)
+        elif inp == '/add_filial': #melhorar
+            cf.adicionar_filial(dados, filiais)
+        elif inp == '/del_filial': #done
+            if l.nao_esta_vazio(filiais):
+                cf.remover_filial(filiais)
+        elif inp == '/rename_filial': #done
+            if l.nao_esta_vazio(filiais):
+                cf.rename_filial(filiais)
+        elif inp == '/add_cliente':
+            if l.nao_esta_vazio(filiais):
+                cf.adicionar_cliente(dados, tipos_de_valor, filiais, tipos_dos_tipos_de_valor)
+        elif inp == '/del_cliente':
+            if l.nao_esta_vazio(dados):
+                cf.remover_cliente(dados)
+        elif inp == '/find_cliente':
+            if l.nao_esta_vazio(dados):
+                cf.encontrar_cliente
+        elif inp == '/alterar_dados':
+            if l.nao_esta_vazio(dados):
+                cf.alterar_dados_cliente():
+        elif inp == '/list_filiais': #done
+            if l.nao_esta_vazio(filiais):
+                print([x[0:-4] for x in filiais])
+        else:
+            print('Opção inválida.')
+
+
 def comandos_p1():
     time.sleep(1)
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
