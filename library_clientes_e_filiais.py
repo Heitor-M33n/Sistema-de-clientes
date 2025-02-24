@@ -4,7 +4,8 @@ import library as l
 #To-Do:
 #Modularizar a escolha de filial
 #implementar o l.next_id() antes das funções de cliente
-#funções referentes aos clientes ( TODAS )
+#funções ( ver comandos )
+#reformular
 #função do novo tipo de dado ( :sob: )
 
 valores = ['id do cliente', 'nome completo', 'telefone', 'cpf', 'compras'] #todos os dados são do tipo str ou int, exceto compras -> list[str], com a informação sobre a compra e seu horário ( usar datetime ) 
@@ -57,6 +58,8 @@ def condicionais():
         elif inp == '/list_filiais': #done
             if l.nao_esta_vazio(filiais):
                 print([x[0:-4] for x in filiais])
+        elif inp == '/novo_dado':
+            novo_dado()
         else:
             print('Opção inválida.')
 
@@ -210,4 +213,7 @@ def remover_cliente(dados: list) -> list:
         return
 
 def alterar_dados_cliente():
+    pass
+
+def novo_dado():
     pass
