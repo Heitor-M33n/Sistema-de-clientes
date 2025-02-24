@@ -3,7 +3,6 @@ import library as l
 
 #To-Do:
 #Modularizar a escolha de filial
-#implementar o l.next_id() antes das funções de cliente
 #funções ( ver comandos )
 #reformular
 #função do novo tipo de dado ( :sob: )
