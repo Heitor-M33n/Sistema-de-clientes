@@ -64,12 +64,12 @@ def main_loop():
             cf.remover_cliente(clientes, filiais)
         elif inp == '/find_cliente':
             cf.encontrar_cliente(clientes, filiais, valores_totais)
-        elif inp == '/alterar_dados':
-            cf.alterar_dados_cliente()
+        elif inp == '/alterar_dados_cliente':
+            cf.alterar_dados_cliente(clientes, filiais)
         elif inp == '/list_filiais':
             print([x[0:-4] for x in filiais])
         elif inp == '/novo_tipo_de_dado':
-            cf.novo_dado()
+            cf.novo_dado(clientes, valores_totais)
         elif inp == '/add_produto':
             produtos_e_valores = ev.cadastrar_produto(produtos_e_valores)
         else:

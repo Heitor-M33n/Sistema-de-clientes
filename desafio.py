@@ -75,7 +75,7 @@ def menu():
 while True:
     opcao = menu()
     if opcao == 1:
-        mostrar_estoque(estoque)
+        mostrar_estoque_ind(estoque)
     elif opcao == 2:
         cadastrar_produto(estoque)
     elif opcao == 3:

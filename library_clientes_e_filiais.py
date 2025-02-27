@@ -160,8 +160,100 @@ def remover_cliente(c: list[list[list]], f: list[str]):
                     
     l.escrever_csv(c, f)
         
-def alterar_dados_cliente():
-    pass
+def alterar_dados_cliente(c: list[list[list]], f: list[str], vt: list): #vt[0]: tipos_de_dados, vt[1]: type_dados
+    try:
+        id = int(input('Digite o id do cliente que deseja alterar, digite 0 caso não tenha o id do cliente: ').strip())
+    except ValueError:
+        print('Insira um númer')
+        return
+    
+    if id <= 0:
+        encontrar_cliente(c, f)
+        return        
+        
+    encontrado = False
+        
+    for filial in c:
+        for linha in filial:
+            if int(linha[0]) == id:
+                encontrado = True
+                print('Cliente encontrado com sucesso.')
+                
+                for i, campo in enumerate(vt[1]):
+                    tipo = vt[0][i]
+                    valor_atual = linha[i + 1]
 
-def novo_dado(c: list[list[list]], f: list[str], v: list[str], tv: list[str]):
-    pass
+                    entrada = input(f'Digite o novo {campo}: ').strip()
+
+                    if tipo == 'int':
+                        if entrada:
+                            try:
+                                linha[i + 1] = int(entrada)
+                            except ValueError:
+                                print(f'Valor invalido para {campo}. Deve ser um numero inteiro.')
+                                return
+                                
+                    elif tipo == 'str':
+                        linha[i + 1] = entrada if entrada else valor_atual
+
+                    elif tipo == 'float':
+                        if entrada:
+                            try:
+                                linha[i + 1] = str(entrada)
+                            except ValueError:
+                                print(f'Valor invalido para {campo}')
+                                return
+                    else:
+                        print(f'Tipo de dado desconhecido para {campo}.')
+                        return
+                    
+        print('Dados do cliente alterados com sucesso!') 
+        break
+
+    if not encontrado:
+        print('Cliente não existente!')
+        return
+                    
+    l.escrever_csv(c, f)
+
+def novo_dado(c: list[list[list]], vt: list): #vt[0]: tipos_de_dados, vt[1]: type_dados
+    nome_dado = (input('Insira o nome do novo tipo de dado: ').strip()).capitalize()
+
+    escolha = input(f'Insira o número correspondente ao novo tipo de dado: ').strip()
+    
+    if escolha not in ['1', '2', '3']:
+        print('Tipo de dado inexistente.')
+        return
+    
+    [vt[0]].append(nome_dado)
+
+    if escolha == '1':
+        [vt[1]].append('int')
+    elif escolha == '2':
+        [vt[1]].append('str')
+    else:
+        [vt[1]].append('float')
+
+    for filial in c:
+        for linha in filial:
+            linha.append('')
+            
+def delete_novo_daddo(c: list[list[list]], vt: list): #id, nome, tel, cpf, 
+    l.print_em_ordem_numerado(vt[0][4:])
+    print(len(vt[0][4:]))
+    try:
+        escolha = int(input(f'Insira o número correspondente ao tipo de dado a ser deletado: ').strip())
+    except ValueError:
+        print('Insira um número!')
+        return
+    
+    if escolha not in range(len(vt[0][4:])):
+        print('Tipo de dado inexistente')
+        return
+    
+    index = escolha + 4
+    
+    
+    for filial in c:
+        for linha in filial:
+            linha.pop(index)

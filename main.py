@@ -8,4 +8,4 @@ print('para gestão de clientes, filiais, estoque e vendas.')
 print('Digite /help para ver os comandos, /sair para fechar o sistema.')
 print('===============================================================')
 
-library.main_loop()
+library.main_loop()#quando ver isso chama call seu #########
