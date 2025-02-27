@@ -1,4 +1,2 @@
 # Sistema-de-clientes
- Sistema de gerenciamento de dados de clientes para lojas
-
-TBA...
+ Sistema de gerenciamento para lojas, trabalha com várias filiais e respectivos estoques para cada, existem 2 blocos principais de informações, os dados dos clientes que são armazenados e o estoque atual para cada filial, com produto, preço e quantidade do produto disponível na filial. Os dados são armazenados em arquivos.csv para cada filial e respectivo estoque, organizados em pastas, por meio da biblioteca os e csv.
