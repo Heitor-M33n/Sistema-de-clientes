@@ -20,27 +20,22 @@ A cada iteração do main loop o código já atualiza a matriz automaticamente, 
 o csv com a matriz( lembrar de colocar ela quando chamar a função no main, por meio dos args da função )
 '''
 
-#To-Do:
-#Modularizar a escolha de filial
-#funções ( ver comandos )
-#função do novo tipo de dado ( :sob: )
-
-def next_id(c: list[list]) -> int: #done
+def next_id(c: list[list]) -> int:
     next_id = 1
 
     for filial in c:
         for linha in filial:
-            if linha[0] >= next_id:
-                next_id = linha[0] + 1
+            if int(linha[0]) >= next_id:
+                next_id = int(linha[0]) + 1
     
     return next_id
 
-def escolha_filial(c: list[list[list[str]]], f: list[str]) -> int: #done
+def escolha_filial(c: list[list[list[str]]], f: list[str], m: str='para visualizar seus dados') -> int:
     f_sem_csv = [x[0:-4] for x in f]
     l.print_em_ordem_numerado(f_sem_csv)
     
     try:
-        num = int(input('\nEscolha uma filial pelo número, para visualizar seus dados: ').strip())
+        num = int(input(f'\nEscolha uma filial pelo número, {m}: ').strip())
     except ValueError:
         print('Insira um número.')
         return -1
@@ -51,7 +46,7 @@ def escolha_filial(c: list[list[list[str]]], f: list[str]) -> int: #done
     
     return (num - 1)
 
-def visualizar_dados(c: list[list[list[str]]], v: list[str], f: list[str]): #de modo cru, está concluída
+def visualizar_dados(c: list[list[list]], v: list[str], f: list[str]):
     v.insert(0, 'filial')
     print(v)
 
@@ -64,7 +59,7 @@ def visualizar_dados(c: list[list[list[str]]], v: list[str], f: list[str]): #de 
 
     v.pop(0)
 
-def visualizar_dados_filial(c: list[list[list[str]]], v: list[str], f: list[str]): #de modo cru, está concluída
+def visualizar_dados_filial(c: list[list[list]], v: list[str], f: list[str]):
     index_filial = escolha_filial(c, f)
     
     if index_filial < 0:
@@ -78,20 +73,24 @@ def visualizar_dados_filial(c: list[list[list[str]]], v: list[str], f: list[str]
     for i in c[index_filial]:
         print(i)
 
-def adicionar_filial(c: list[list[list[str]]], f: list[str]) -> list[str]: #done
+def adicionar_filial(c: list[list[list]], f: list[str]) -> list[str]:
     filial = f"{(input('Insira o nome para a nova filial: ').strip()).capitalize()}.csv"
 
     if filial in f:
         print('Filial já existente')
         return f
     
+    if '/' in filial:
+        print('Caractere inválido')
+        return 
+    
     f.append(filial)
     l.escrever_csv(c, f, 'nova-filial')
     l.escrever_csv(c, f, 'novo-estoque')
     return f
 
-def remover_filial(c: list[list[list[str]]], f: list[str]): #done
-    index_filial = escolha_filial(c, f)
+def remover_filial(c: list[list[list]], f: list[str]):
+    index_filial = escolha_filial(c, f, 'para remover')
 
     if index_filial < 0:
         return
@@ -99,8 +98,8 @@ def remover_filial(c: list[list[list[str]]], f: list[str]): #done
     os.remove(f'filiais/{f[index_filial]}')
     os.remove(f'estoque/estoque_{f[index_filial]}')
 
-def rename_filial(c: list[list[list[str]]], f: list[str]): #done
-    index_filial = escolha_filial(c, f)
+def rename_filial(c: list[list[list]], f: list[str]):
+    index_filial = escolha_filial(c, f, 'para renomear')
 
     if index_filial < 0:
         return
@@ -110,39 +109,59 @@ def rename_filial(c: list[list[list[str]]], f: list[str]): #done
     os.rename(f'filiais/{f[index_filial]}', f'filiais/{nome}')
     os.rename(f'estoque/estoque_{f[index_filial]}', f'estoque/estoque_{nome}')
 
-def encontrar_cliente():
-    pass
-
-def adicionar_cliente(c: list[list], v: list[str] , f: list[str], tv: list[str]):
+def adicionar_cliente(c: list[list[list]], v: list[str] , f: list[str], tv: list[str]):
     dados_cliente = [next_id(c)]
-
-    f_sem_csv = [x[0:-4] for x in f]
-    l.print_em_ordem_numerado(f_sem_csv)
    
-    try:
-        num = int(input('\nEscolha a filial do cliente, pelo seu número: ').strip())
-    except ValueError:
-        print('Insira um número.')
-        return
-
-    if num > len(f) or num < 1:
-        print('Essa filial não existe.')
-        return
-
+    index_filial = escolha_filial(c, f, 'para adicionar um cliente')
+    
     for i in v[1:]:
         tipo = tv[v.index(i)]
         if tipo == 'str':
-            dados_cliente.append((input(f'Insira o {i} do cliente: ').strip()).capitalize())
+            x = (input(f'Insira o {i} do cliente: ').strip()).capitalize()
         elif tipo == 'int':
-            dados_cliente.append(int(l.remover_caracteres(input(f'Insira o {i} do cliente: ').strip())))
+            x = int(l.remover_caracteres(input(f'Insira o {i} do cliente: ').strip()))
+        elif tipo == 'float':
+            x = int(l.remover_caracteres(input(f'Insira o {i} do cliente: ').strip()))
+        if not x:
+            print('Valor inválido, tentativa cancelada')
+            return
+        
+        dados_cliente.append(x)
+        
+    c[index_filial].append(dados_cliente)
+    l.escrever_csv(c, f, )
 
-    c[num - 1].append(dados_cliente)
-
-def remover_cliente() -> list:
+def encontrar_cliente(c: list[list[list]], f: list[str]) -> list:
     pass
 
+def remover_cliente(c: list[list[list]], f: list[str]):
+    try:
+        id = int(input('Digite o id do cliente que será removido, digite 0 caso não tenha o id do cliente: ').strip())
+    except ValueError:
+        print('Insira um número')
+        return
+    
+    if id == 0:
+        encontrar_cliente(c, f)        
+        
+    encontrado = False
+        
+    for filial in c:
+        for linha in filial:
+            if int(linha[0]) == id:
+                encontrado = True
+                print('Cliente removido com sucesso.')
+                filial.remove(linha)
+                break
+                    
+    if not encontrado:
+        print('Cliente não existente!')
+        return
+                    
+    l.escrever_csv(c, f)
+        
 def alterar_dados_cliente():
     pass
 
-def novo_dado():
+def novo_dado(c: list[list[list]], f: list[str], v: list[str], tv: list[str]):
     pass
