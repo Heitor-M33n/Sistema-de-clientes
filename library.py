@@ -2,27 +2,9 @@ import os, csv, time
 import library_clientes_e_filiais as cf
 import library_estoque_e_vendas as ev
 
-'''
-Sobre a matriz tridimensional:
-
-[ > primeira dimensão: cada filial
-    [ > matriz para a filial
-        [1, 'Heitor Ferreira Da Silva', 84999673539, 13241234651, []]
-    ],
-
-    [
-        [2, 'Cauã', 84999673538, 112341234131, []]
-        [3, 'Joaquim', 849996123358, 1132412352, []]
-    ]
-]
-
-Sobre o csv: Ao final de cada função, usar o escrever_csv para atualizar o .csv, ver os modos.
-A cada iteração do main loop o código já atualiza a matriz automaticamente, para estarem sempre sincronizados, 
-o csv com a matriz( lembrar de colocar ela quando chamar a função no main, por meio dos args da função )
-'''
-
-valores = ['id do cliente', 'nome completo', 'telefone', 'cpf', 'compras'] #todos os dados são do tipo str ou int, exceto compras -> list[str], com a informação sobre a compra e seu horário ( usar datetime ) 
-type_valores = ['int', 'str', 'int', 'int', 'list[str]']
+valores = ['id do cliente', 'nome completo', 'telefone', 'cpf'] #todos os dados são do tipo str ou int, exceto compras -> list[str], com a informação sobre a compra e seu horário ( usar datetime ) 
+type_valores = ['int', 'str', 'int', 'int']
+produtos_e_valores = [[], []]
 
 def comandos_p1():
     time.sleep(1)
@@ -31,7 +13,7 @@ def comandos_p1():
     print('/sair - Fecha o sistema') #done
     print('/vis_dados - Mostra todos os dados de clientes') #done
     print('/vis_dados_filial - Mostra os dados de uma filial de escolha') #done
-    print('/add_filial - Cria uma filial vazia ') #melhorar e consertar
+    print('/add_filial - Cria uma filial vazia ( e um estoque para ela )') #melhorar e consertar
     print('/del_filial - Remove uma filial, deletando seus dados ou os movendo') #done
     print('/rename_filial - Renomeia uma filial de escolha') #done
     print("  1/2 digite '/' e número da página que deseja acessar ( como /2 )")
@@ -51,9 +33,7 @@ def comandos_p2():
 def main_loop():
     while True:
         info = get_info()
-        clientes = info[0]
-        filiais = info[1]
-        estoque = info[2]
+        clientes, filiais, estoque, valores = info
         print(info)
 
         inp = (input('\n').strip()).lower()
@@ -73,9 +53,9 @@ def main_loop():
         elif inp == '/add_filial': #melhorar e consertar
             cf.adicionar_filial(clientes, filiais)
         elif inp == '/del_filial': #done
-            cf.remover_filial(filiais)
+            cf.remover_filial(clientes, filiais)
         elif inp == '/rename_filial': #done
-            cf.rename_filial(filiais)
+            cf.rename_filial(clientes, filiais)
         elif inp == '/add_cliente': #testar
             cf.adicionar_cliente(clientes, valores, filiais, type_valores)
         elif inp == '/del_cliente': #testar
@@ -86,13 +66,15 @@ def main_loop():
             cf.alterar_dados_cliente()
         elif inp == '/list_filiais': #done
             print([x[0:-4] for x in filiais])
-        elif inp == '/novo_dado':
+        elif inp == '/novo_tipo_de_dado':
             cf.novo_dado()
+        elif inp == '/add_produto':
+            produtos_e_valores = ev.cadastrar_produto(produtos_e_valores)
         else:
             print('Opção inválida.')
 
-def get_info() -> list[list[list[list[str]]], list[str], list[str]]:
-    clientes = []
+def get_info() -> list[list[list[list[str]]], list[str], list[str], list]:
+    clientes = []; valores = []
     filiais = os.listdir('filiais')
     estoque = os.listdir('estoque')
 
@@ -106,7 +88,7 @@ def get_info() -> list[list[list[list[str]]], list[str], list[str]]:
                 filial.append(linha)
         clientes.append(filial)
 
-    return [clientes, filiais, estoque]
+    return [clientes, filiais, estoque, valores]
    
 def print_em_ordem_numerado(x: list, mensagem: str=' '):
     for i in range(len(x)):
@@ -124,3 +106,17 @@ def remover_caracteres(string: str, modo: str='num') -> int:
                 string_new += i
 
     return string_new
+
+def escrever_csv(clientes: list[list[list]], filiais: list[str], modo: str='w', valores: list=0): #done
+        if modo == 'w':
+            for i in filiais:
+                with open(f'filiais/{i}', mode='w', newline='') as file:
+                    csv.writer(file).writerows(clientes[filiais.index(i)])
+        elif modo == 'nova-filial':
+            with open(f'filiais/{filiais[-1]}', mode='w', newline='') as file:
+                return
+        elif modo == 'novo-estoque':
+            with open(f'estoque/estoque_{filiais[-1]}', mode='w', newline='') as file:
+                return
+        elif modo == 'valores':
+            with open('valores.csv', mode='w', newline='') as file:
