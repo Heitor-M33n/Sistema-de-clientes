@@ -116,11 +116,11 @@ def remover_caracteres(string: str, modo: str='num') -> int:
         return string_new
     return False
 
-def escrever_csv(clientes: list[list[list]], filiais: list[str], modo: str='w'): #done
+def escrever_csv(dados: list[list[list]], filiais: list[str], modo: str='w'): #done
         if modo == 'w':
             for i in filiais:
                 with open(f'filiais/{i}', mode='w', newline='') as file:
-                    csv.writer(file).writerows(clientes[filiais.index(i)])
+                    csv.writer(file).writerows(dados[filiais.index(i)])
         elif modo == 'nova-filial':
             with open(f'filiais/{filiais[-1]}', mode='w', newline='') as file:
                 return
@@ -129,4 +129,5 @@ def escrever_csv(clientes: list[list[list]], filiais: list[str], modo: str='w'):
                 return
         elif modo == 'valores':
             with open('valores.csv', mode='w', newline='') as file:
+                csv.writer(file).writerows(dados)
                 return
