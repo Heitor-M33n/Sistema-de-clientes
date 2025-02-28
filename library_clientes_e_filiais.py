@@ -87,6 +87,7 @@ def adicionar_filial(c: list[list[list]], f: list[str]) -> list[str]:
     f.append(filial)
     l.escrever_csv(c, f, 'nova-filial')
     l.escrever_csv(c, f, 'novo-estoque')
+    print('Filial adicionada com sucesso!')
     return f
 
 def remover_filial(c: list[list[list]], f: list[str]):
@@ -97,6 +98,7 @@ def remover_filial(c: list[list[list]], f: list[str]):
     
     os.remove(f'filiais/{f[index_filial]}')
     os.remove(f'estoque/estoque_{f[index_filial]}')
+    print('Filial removida com sucesso!')
 
 def rename_filial(c: list[list[list]], f: list[str]):
     index_filial = escolha_filial(c, f, 'para renomear')
@@ -108,6 +110,7 @@ def rename_filial(c: list[list[list]], f: list[str]):
   
     os.rename(f'filiais/{f[index_filial]}', f'filiais/{nome}')
     os.rename(f'estoque/estoque_{f[index_filial]}', f'estoque/estoque_{nome}')
+    print('Filial removida com sucesso!')
 
 def adicionar_cliente(c: list[list[list]], v: list[str] , f: list[str], tv: list[str]):
     dados_cliente = [next_id(c)]
@@ -117,11 +120,11 @@ def adicionar_cliente(c: list[list[list]], v: list[str] , f: list[str], tv: list
     for i in v[1:]:
         tipo = tv[v.index(i)]
         if tipo == 'str':
-            x = (input(f'Insira o {i} do cliente: ').strip()).capitalize()
+            x = (input(f'Insira o {i} do cliente (0 caso desconhecido): ').strip()).capitalize()
         elif tipo == 'int':
-            x = int(l.remover_caracteres(input(f'Insira o {i} do cliente: ').strip()))
+            x = int(l.remover_caracteres(input(f'Insira o {i} do cliente (0 caso desconhecido): ').strip()))
         elif tipo == 'float':
-            x = int(l.remover_caracteres(input(f'Insira o {i} do cliente: ').strip()))
+            x = int(l.remover_caracteres(input(f'Insira o {i} do cliente (0 caso desconhecido): ').strip()))
         if not x:
             print('Valor inválido, tentativa cancelada')
             return
@@ -130,6 +133,7 @@ def adicionar_cliente(c: list[list[list]], v: list[str] , f: list[str], tv: list
         
     c[index_filial].append(dados_cliente)
     l.escrever_csv(c, f, )
+    print('Cliente adicionado com sucesso!')
 
 def encontrar_cliente(c: list[list[list]], f: list[str]) -> list:
     pass
@@ -238,7 +242,7 @@ def novo_dado(c: list[list[list]], vt: list): #vt[0]: tipos_de_dados, vt[1]: typ
         for linha in filial:
             linha.append('')
             
-def delete_novo_daddo(c: list[list[list]], vt: list): #id, nome, tel, cpf, 
+def delete_novo_dado(c: list[list[list]], vt: list): #id, nome, tel, cpf, 
     l.print_em_ordem_numerado(vt[0][4:])
     print(len(vt[0][4:]))
     try:
