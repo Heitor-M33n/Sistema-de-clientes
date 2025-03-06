@@ -1,4 +1,2 @@
-id,nome completo,telefone,cpf
+Id,Nome,Telefone,Cpf
 int,str,int,int
-arroz
-3.99

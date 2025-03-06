@@ -12,7 +12,8 @@ def comandos_p1():
     print('/add_filial - Cria uma filial vazia ( e um estoque para ela )')
     print('/del_filial - Remove uma filial, deletando seus dados ( e seu estoque )')
     print('/rename_filial - Renomeia uma filial de escolha')
-    print('  1/3 digite / e número da página que deseja acessar ( como /2 )')
+    print('/list_filiais - Mostra todas as filiais existentes')
+    print('  1/2 digite / e número da página que deseja acessar ( como /2 )')
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
 def comandos_p2():
@@ -22,13 +23,17 @@ def comandos_p2():
     print('/find_cliente - Localiza cliente por alguma informação dele.')
     print('/del_cliente - Remove cliente(s) de uma filial')
     print('/alterar_dados - Altera dados de escolha de um cliente')
-    print('/list_filiais - Mostra todas as filiais existentes')
-    print('  2/3 digite / e número da página que deseja acessar')
+    print('/add_dado - Adiciona um novo tipo de dado para ser armazenado')
+    print('/del_dado - Remove um tipo de dado (Não é possível remover id, filial e nome.)')
+    print('  2/2 digite / e número da página que deseja acessar')
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
 def comandos_p3():
     time.sleep(1)
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print()
+    print('Nada aqui por enquanto...')
+    print()
     print('  3/3 digite / e número da página que deseja acessar')
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
@@ -36,7 +41,7 @@ def main_loop():
     while True:
         info = get_info()
         clientes, filiais, estoque, valores_totais = info
-        tipos_de_dado, type_dados, produtos, precos = valores_totais
+        tipos_de_dado, type_dados = valores_totais
 
         inp = (input('\n').strip()).lower()
         print()
@@ -61,17 +66,17 @@ def main_loop():
         elif inp == '/add_cliente':
             cf.adicionar_cliente(clientes, tipos_de_dado, filiais, type_dados)
         elif inp == '/del_cliente':
-            cf.remover_cliente(clientes, filiais)
+            cf.remover_cliente(clientes, filiais, tipos_de_dado)
         elif inp == '/find_cliente':
-            cf.encontrar_cliente(clientes, filiais, valores_totais)
-        elif inp == '/alterar_dados_cliente':
-            cf.alterar_dados_cliente(clientes, filiais)
+            cf.encontrar_cliente(clientes, filiais, tipos_de_dado)
+        elif inp == '/alterar_dados':
+            cf.alterar_dados_cliente(clientes, filiais, tipos_de_dado, type_dados)
         elif inp == '/list_filiais':
             print([x[0:-4] for x in filiais])
-        elif inp == '/novo_tipo_de_dado':
-            cf.novo_dado(clientes, valores_totais)
-        elif inp == '/add_produto':
-            produtos_e_valores = ev.cadastrar_produto(produtos_e_valores)
+        elif inp == '/add_dado':
+            cf.novo_dado(clientes, filiais, tipos_de_dado, type_dados)
+        elif inp == '/del_dado':
+            cf.remover_dado(clientes, filiais, tipos_de_dado, type_dados)
         else:
             print('Opção inválida.')
 
@@ -100,7 +105,7 @@ def print_em_ordem_numerado(x: list, mensagem: str=' '):
     for i in range(len(x)):
         print(f'{i + 1}.{mensagem}{x[i]}')
 
-def remover_caracteres(string: str, modo: str='num') -> int:
+def remover_caracteres(string: str, modo: str = 'num'):
     string_new = ''
 
     for i in string:
