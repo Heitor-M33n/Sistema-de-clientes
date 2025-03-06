@@ -279,19 +279,20 @@ def alterar_dados_cliente(c: list[list[list]], f: list[str], v: list[str], tv: l
         for linha in filial:
             if int(linha[0]) == id:
                 encontrado = True
+                cliente = linha
                 break
-    
+
     if not encontrado:
         print('Cliente não encontrado')
         return
     
     print(v)
-    print(linha)
+    print(cliente)
     repetir = 'y'
     while repetir == 'y':
-        loop_alterar(c, f, v, tv, linha)
+        loop_alterar(c, f, v, tv, cliente)
         print(v)
-        print(linha)
+        print(cliente)
         repetir = (input('Deseja alterar outro valor do mesmo cliente? (y/n): ').strip()).lower()
     
     print('Ação cancelada.')
